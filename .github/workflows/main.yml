@@ -11,6 +11,9 @@ jobs:
         shell: bash
       - name: Printing a non-existant file does not fail (when it should)
         run: cat some-file-that-does-not-exist-throws-errors.txt
+        shell: /usr/bin/bash {0}
+      - name: Printing a non-existant file does not fail (when it should)
+        run: cat some-file-that-does-not-exist-throws-errors.txt
         shell: bash
       - name: Printing a non-existant file does fail
         run: |
