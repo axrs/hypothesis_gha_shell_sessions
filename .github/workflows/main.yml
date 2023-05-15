@@ -1,0 +1,19 @@
+name: Hypothesis
+run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+on: [push]
+jobs:
+  Explore-GitHub-Actions:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "The next step should pass, the following should fail"
+      - name: Setting variables that should NOT cascade through steps
+        run: set -euo pipefail
+        shell: bash
+      - name: Printing a non-existant file does not fail (when it should)
+        run: cat some-file-that-does-not-exist-throws-errors.txt
+        shell: bash
+      - name: Printing a non-existant file does fail
+        run: |
+          set -euo pipefail
+          cat some-file-that-does-not-exist-throws-errors.txt
+        shell: bash
