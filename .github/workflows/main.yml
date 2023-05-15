@@ -13,8 +13,8 @@ jobs:
         if: always()
         run: |
           cat some-file-that-does-not-exist-throws-errors.txt
-          echo 'Exiting with code 555 if errexit is not enabled'
-          exit 555
+          echo 'Exiting with code 55 if errexit is not enabled'
+          exit 55
         shell: /usr/bin/bash {0}
 
       - name: Plain Bash Entry (with errexit)
@@ -22,16 +22,16 @@ jobs:
         run: |
           set -euo pipefail
           cat some-file-that-does-not-exist-throws-errors.txt
-          echo 'Exiting with code 555 if errexit is not enabled'
-          exit 555
+          echo 'Exiting with code 55 if errexit is not enabled'
+          exit 55
         shell: /usr/bin/bash {0}
 
       - name: GitHub Actions Bash Entry
         if: always()
         run: |
           cat some-file-that-does-not-exist-throws-errors.txt
-          echo 'Exiting with code 555 if errexit is not enabled'
-          exit 555
+          echo 'Exiting with code 55 if errexit is not enabled'
+          exit 55
         shell: bash
 
       - name: GitHub Actions Bash Entry (disabled errexit)
@@ -39,6 +39,6 @@ jobs:
         run: |
           set +e
           cat some-file-that-does-not-exist-throws-errors.txt
-          echo 'Exiting with code 555 if errexit is not enabled'
-          exit 555
+          echo 'Exiting with code 55 if errexit is not enabled'
+          exit 55
         shell: bash
