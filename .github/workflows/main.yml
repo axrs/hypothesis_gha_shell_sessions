@@ -5,26 +5,40 @@ jobs:
   Main:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "The next step should pass, the following should fail"
       - name: Setting variables that should NOT cascade through steps
         run: set -euo pipefail
         shell: bash
-      - name: Printing a non-existant file does not fail (when it should)
+
+      - name: Plain Bash Entry (no errexit)
         if: always()
         run: |
           cat some-file-that-does-not-exist-throws-errors.txt
-          echo 'This will RUN as errexit is NOT enabled'
+          echo 'Exiting with code 555 if errexit is not enabled'
+          exit 555
         shell: /usr/bin/bash {0}
-      - name: Printing a non-existant file does not fail (when it should)
-        if: always()
-        run: | 
-          cat some-file-that-does-not-exist-throws-errors.txt
-          echo 'This will NOT as errexit is set by the default bash runner'
-        shell: bash
-      - name: Printing a non-existant file does fail
+
+      - name: Plain Bash Entry (with errexit)
         if: always()
         run: |
           set -euo pipefail
           cat some-file-that-does-not-exist-throws-errors.txt
-          echo 'This will NOT RUN as errexit is enabled'
+          echo 'Exiting with code 555 if errexit is not enabled'
+          exit 555
         shell: /usr/bin/bash {0}
+
+      - name: GitHub Actions Bash Entry
+        if: always()
+        run: |
+          cat some-file-that-does-not-exist-throws-errors.txt
+          echo 'Exiting with code 555 if errexit is not enabled'
+          exit 555
+        shell: bash
+
+      - name: GitHub Actions Bash Entry (disabled errexit)
+        if: always()
+        run: |
+          set +e
+          cat some-file-that-does-not-exist-throws-errors.txt
+          echo 'Exiting with code 555 if errexit is not enabled'
+          exit 555
+        shell: bash
