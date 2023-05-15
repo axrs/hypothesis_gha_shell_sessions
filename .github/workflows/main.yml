@@ -10,12 +10,15 @@ jobs:
         run: set -euo pipefail
         shell: bash
       - name: Printing a non-existant file does not fail (when it should)
+        if: always()
         run: cat some-file-that-does-not-exist-throws-errors.txt
         shell: /usr/bin/bash {0}
       - name: Printing a non-existant file does not fail (when it should)
+        if: always()
         run: cat some-file-that-does-not-exist-throws-errors.txt
         shell: bash
       - name: Printing a non-existant file does fail
+        if: always()
         run: |
           set -euo pipefail
           cat some-file-that-does-not-exist-throws-errors.txt
