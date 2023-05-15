@@ -11,15 +11,20 @@ jobs:
         shell: bash
       - name: Printing a non-existant file does not fail (when it should)
         if: always()
-        run: cat some-file-that-does-not-exist-throws-errors.txt
+        run: |
+          cat some-file-that-does-not-exist-throws-errors.txt
+          echo 'This will RUN as errexit is NOT enabled'
         shell: /usr/bin/bash {0}
       - name: Printing a non-existant file does not fail (when it should)
         if: always()
-        run: cat some-file-that-does-not-exist-throws-errors.txt
+        run: | 
+          cat some-file-that-does-not-exist-throws-errors.txt
+          echo 'This will NOT as errexit is set by the default bash runner'
         shell: bash
       - name: Printing a non-existant file does fail
         if: always()
         run: |
           set -euo pipefail
           cat some-file-that-does-not-exist-throws-errors.txt
-        shell: bash
+          echo 'This will NOT RUN as errexit is enabled'
+        shell: /usr/bin/bash {0}
